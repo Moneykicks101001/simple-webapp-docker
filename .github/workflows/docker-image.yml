@@ -14,5 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Install Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}  
+        service_account_key: ${{ secrets.GCP_KEY }}  
+
+    - name: Build and Push the Docker image
+      env: 
+        Project_id : ${{ secrets.PROJECT_ID }}
+      run: |
+        gcloud auth configure-docker us-central1-docker.pkg.dev
+        docker build --t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
+        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
+
+    
