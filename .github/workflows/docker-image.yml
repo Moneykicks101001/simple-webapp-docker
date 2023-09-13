@@ -54,6 +54,6 @@ jobs:
         TAG: "${{ github.run_number }}"
       uses: google-github-actions/deploy-cloudrun@main
       with:
-        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:8
+        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython@sha256:69e2a1d4cde410ab88c56e0ea6e576ef8e5d2ac34d2897739c21f68544a6e6d1
         service: simpython
         region: us-central1
