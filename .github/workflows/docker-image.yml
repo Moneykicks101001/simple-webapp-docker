@@ -25,7 +25,7 @@ jobs:
     - name: Build and Push the Docker image
       env: 
         Project_id : ${{ secrets.PROJECT_ID }}
-        TAG: "v${{ github.run_number }}
+        TAG: "${{ github.run_number }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
         docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG .
