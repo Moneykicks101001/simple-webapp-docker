@@ -9,7 +9,6 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -24,21 +23,19 @@ jobs:
 
     - name: Build and Push the Docker image
       env: 
-        Project_id : ${{ secrets.PROJECT_ID }}
-        TAG: "${{ github.run_number }}
+        Project_id: ${{ secrets.PROJECT_ID }}
+        TAG: "${{ github.run_number }}"
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
         docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG .
         docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG
-        echo "::set-env name=IMAGE_TAG::$TAG"  
+        echo "::set-env name=IMAGE_TAG::$TAG"
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-
- 
- deploy:
-   needs: build
-   runs-on: ubuntu-latest
-
+    steps:
     - name: Install Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v0
       with:
@@ -49,15 +46,14 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v0
       with: 
-        credentials_json:  ${{ secrets.GCP_KEY }}  
+        credentials_json: ${{ secrets.GCP_KEY }}  
 
     - name: Deploy to Cloud Run
       env: 
-          Project_id : ${{ secrets.PROJECT_ID }}
-          Run_number : $GITHUB_RUN_NUMBER
+        Project_id: ${{ secrets.PROJECT_ID }}
+        TAG: ${{ steps.build.outputs.IMAGE_TAG }}
       uses: google-github-actions/deploy-cloudrun@main
       with:
         image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG
         service: simpython
         region: us-central1
-    
