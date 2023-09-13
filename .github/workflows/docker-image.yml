@@ -29,7 +29,6 @@ jobs:
         gcloud auth configure-docker us-central1-docker.pkg.dev
         docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG .
         docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG
-        echo "::set-env name=IMAGE_TAG::$TAG"
 
   deploy:
     needs: build
@@ -51,7 +50,7 @@ jobs:
     - name: Deploy to Cloud Run
       env: 
         Project_id: ${{ secrets.PROJECT_ID }}
-        TAG: ${{ steps.build.outputs.IMAGE_TAG }}
+        TAG: "${{ github.run_number }}"
       uses: google-github-actions/deploy-cloudrun@main
       with:
         image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG
