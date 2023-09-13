@@ -28,7 +28,7 @@ jobs:
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
         docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:latest .
-        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$latest
+        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:latest
         docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG .
         docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$TAG
 
@@ -58,3 +58,4 @@ jobs:
         image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:latest
         service: simpython
         region: us-central1
+        
