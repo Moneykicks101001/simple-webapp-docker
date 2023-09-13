@@ -38,9 +38,10 @@ jobs:
     - name: Deploy to Cloud Run
       env: 
           Project_id : ${{ secrets.PROJECT_ID }}
+          Run_number : $GITHUB_RUN_NUMBER
       uses: google-github-actions/deploy-cloudrun@main
       with:
-        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER
+        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$Run_number
         service: simpython
         region: us-central1
 
