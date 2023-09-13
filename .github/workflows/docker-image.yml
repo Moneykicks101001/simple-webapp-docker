@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Code checkout 
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Install Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v0
@@ -27,7 +27,7 @@ jobs:
         Project_id : ${{ secrets.PROJECT_ID }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build --t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
+        docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
         docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
 
     
