@@ -27,7 +27,7 @@ jobs:
         Project_id : ${{ secrets.PROJECT_ID }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }} .
-        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:${{ env.GITHUB_RUN_NUMBER }}
+        docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER .
+        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER
 
     
