@@ -8,10 +8,31 @@ on:
 
 jobs:
 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code checkout 
+      uses: actions/checkout@v2
+
+    - name: Install Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}  
+        service_account_key: ${{ secrets.GCP_KEY }}  
+
+    - name: Build and Push the Docker image
+      env: 
+        Project_id: ${{ secrets.PROJECT_ID }}
+        TAG: "${{ github.run_number }}"
+      run: |
+        gcloud auth configure-docker us-central1-docker.pkg.dev
+        docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython .
+        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython
 
 
   deploy:
-    #needs: build
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -33,7 +54,7 @@ jobs:
         TAG: "${{ github.run_number }}"
       uses: google-github-actions/deploy-cloudrun@main
       with:
-        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:latest
+        image: us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython
         service: simpython
         region: us-central1
-
+        
