@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Code checkout 
+      uses: actions/checkout@v3
 
     - name: Install Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0
       with:
         project_id: ${{ secrets.PROJECT_ID }}  
         service_account_key: ${{ secrets.GCP_KEY }}  
