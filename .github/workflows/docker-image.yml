@@ -22,21 +22,24 @@ jobs:
         project_id: ${{ secrets.PROJECT_ID }}  
         service_account_key: ${{ secrets.GCP_KEY }}  
 
-    - name: Build and Push the Docker image
-      env: 
-        Project_id : ${{ secrets.PROJECT_ID }}
-      run: |
-        gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER .
-        docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER
+    #- name: Build and Push the Docker image
+    #  env: 
+    #    Project_id : ${{ secrets.PROJECT_ID }}
+    #  run: |
+    #
+    #    gcloud auth configure-docker us-central1-docker.pkg.dev
+    #    docker build -t us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER .
+    #    docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER
 
     - name: Deploy to Cloud Run
       env: 
           Project_id : ${{ secrets.PROJECT_ID }}
-      run: |
-        gcloud run deploy simpython \
-          --image gcr.io/$Project_id/demo-dev-repository-us-central1/simpython:$GITHUB_RUN_NUMBER \
-          --platform managed \
-          --region us-central1
+      uses: google-github-actions/deploy-cloudrun@main
+      with:
+        image: us-central1-docker.pkg.dev/mps-demo-397217/demo-dev-repository-us-central1/simpython:8
+        service: simpython
+        region: us-central1
+        platform: managed
+        allow-unauthenticated: true
 
     
