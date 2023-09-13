@@ -7,10 +7,10 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_ID: ${{ secrets.PROJECT_ID }} # TODO: update Google Cloud project id
-  GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
-  SERVICE: simpython # TODO: update Cloud Run service name
-  REGION: us-central1 # TODO: update Cloud Run service region
+  PROJECT_ID: ${{ secrets.PROJECT_ID }} 
+  GAR_LOCATION: us-central1 
+  SERVICE: simpython 
+  REGION: us-central1 
 
 jobs:
   deploy:
