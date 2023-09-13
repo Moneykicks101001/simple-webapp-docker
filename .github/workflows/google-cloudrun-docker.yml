@@ -34,8 +34,8 @@ jobs:
     - name: Build and Push Container
       run: |-
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
-        docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+        docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/pythonapp:${{ github.sha }}" ./
+        docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/pythonapp:${{ github.sha }}"
         docker push us-central1-docker.pkg.dev/$Project_id/demo-dev-repository-us-central1/simpython
 
     - name: Deploy to Cloud Run
@@ -44,7 +44,7 @@ jobs:
       with:
         service: ${{ env.SERVICE }}
         region: ${{ env.REGION }}
-        image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+        image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/pythonapp:${{ github.sha }}
 
     - name: Show Output
       run: echo ${{ steps.deploy.outputs.url }}
