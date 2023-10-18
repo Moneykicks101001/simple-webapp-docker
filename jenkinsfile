@@ -14,7 +14,7 @@ pipeline {
                     // Change the working directory to /home
                     dir('/simple-webapp-docker') {
                         // Run the Python script
-                        sh 'python app.py'
+                        sh 'echo "hello 2"'
                     }
                 }
             }
