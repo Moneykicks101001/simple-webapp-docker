@@ -10,7 +10,8 @@ pipeline {
 
         stage('Step 2: Say Hello2') {
             steps {
-                echo 'Hello2'
+                sh 'ls'
+                sh 'echo "$(pwd)"'
             }
         }
     }
