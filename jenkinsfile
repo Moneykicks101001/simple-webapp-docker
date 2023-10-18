@@ -36,20 +36,20 @@ pipeline {
                 }
             }
         }
-        // stage('Run Python Script on Remote Server') {
-        //     steps {
-        //         script {
-        //             // Define the SSH credentials ID and remote server details
-        //             def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
-        //             def remoteServer = 'root@python'
-        //             def remotePath = '/home'
+        stage('Run Python Script on Remote Server') {
+            steps {
+                script {
+                    // Define the SSH credentials ID and remote server details
+                    def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
+                    def remoteServer = 'root@python'
+                    def remotePath = '/home'
 
-        //             // Use SSH agent to run the Python script on the remote server
-        //             sshagent(credentials: [sshCredentialsId]) {
-        //                 sh "ssh $remoteServer 'cd $remotePath && python app.py'"
-        //             }
-        //         }
-        //     }
-        // }
+                    // Use SSH agent to run the Python script on the remote server
+                    sshagent(credentials: [sshCredentialsId]) {
+                        sh "ssh $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
+                    }
+                }
+            }
+        }
     }
 }
