@@ -46,7 +46,7 @@ pipeline {
 
                     // Use SSH agent to run the Python script on the remote server
                     sshagent(credentials: [sshCredentialsId]) {
-                        sh "ssh $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
+                        sh "ssh -f $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
                     }
                 }
             }
