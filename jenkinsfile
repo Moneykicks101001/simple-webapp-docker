@@ -1,5 +1,8 @@
 pipeline {
     agent any
+
+    stages {
+
         stage('Append Route') {
             steps {
                 script {
@@ -8,7 +11,8 @@ pipeline {
                 }
             }
         }
-        stage('Show File') {
+
+        stage('Show app.py file') {
             steps {
                 script {
                     // Execute the shell script to append the route
@@ -16,4 +20,5 @@ pipeline {
                 }
             }
         }
+    }
 }
