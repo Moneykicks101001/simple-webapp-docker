@@ -1,17 +1,19 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Step 1: Say Hello') {
+        stage('Append Route') {
             steps {
-                echo 'Hello'
+                script {
+                    // Execute the shell script to append the route
+                    sh './append.sh'
+                }
             }
         }
-
-        stage('Step 2: start server') {
+        stage('Append Route') {
             steps {
-                sh 'ls -la'
+                script {
+                    // Execute the shell script to append the route
+                    sh 'cat app.py'
+                }
             }
         }
-    }
 }
