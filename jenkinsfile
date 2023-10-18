@@ -10,7 +10,7 @@ pipeline {
 
         stage('Step 2: start server') {
             steps {
-                sh 'python app.py'
+                sh 'python3 app.py'
             }
         }
     }
