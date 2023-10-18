@@ -8,15 +8,9 @@ pipeline {
             }
         }
 
-        stage('Step 2: Run Python Script') {
+        stage('Step 2: Say Hello2') {
             steps {
-                script {
-                    // Change the working directory to /home
-                    dir('/simple-webapp-docker') {
-                        // Run the Python script
-                        sh 'echo "hello 2"'
-                    }
-                }
+                echo 'Hello2'
             }
         }
     }
