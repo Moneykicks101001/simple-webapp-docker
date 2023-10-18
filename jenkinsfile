@@ -8,10 +8,9 @@ pipeline {
             }
         }
 
-        stage('Step 2: Say Hello2') {
+        stage('Step 2: start server') {
             steps {
-                sh 'ls'
-                sh 'echo "$(pwd)"'
+                sh 'python app.py'
             }
         }
     }
