@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Step 1: Say Hello') {
+            steps {
+                echo 'Hello'
+            }
+        }
+
+        stage('Step 2: Run Python Script') {
+            steps {
+                script {
+                    // Change the working directory to /home
+                    dir('/simple-webapp-docker') {
+                        // Run the Python script
+                        sh 'python app.py'
+                    }
+                }
+            }
+        }
+    }
+}
