@@ -52,4 +52,10 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            // This block is executed when the pipeline succeeds, regardless of the background process.
+            echo "Pipeline completed successfully."
+        }
+    }
 }
