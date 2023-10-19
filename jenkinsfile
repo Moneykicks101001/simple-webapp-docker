@@ -45,7 +45,7 @@ pipeline {
                     def remotePath = '/home'
 
                     sshagent(credentials: [sshCredentialsId]) {
-                        sh "ss -lptn 'sport = :5000' | awk -F'[(,=]' '/python/{system("kill " $5)}'"
+                        sh "ssh $remoteServer 'ss -lptn \"sport = :5000\" | awk -F'[(,=]' \"/python/{system(\"kill \" \\$5)}\"'"
                     }
                 }
             }
