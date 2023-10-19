@@ -36,6 +36,20 @@ pipeline {
                 }
             }
         }
+        stage('Stop application') {
+            steps {
+                script {
+                    // Define the SSH credentials ID and remote server details
+                    def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
+                    def remoteServer = 'root@python'
+                    def remotePath = '/home'
+
+                    sshagent(credentials: [sshCredentialsId]) {
+                        sh "ss -lptn 'sport = :5000' | awk -F'[(,=]' '/python/{system("kill " $5)}'"
+                    }
+                }
+            }
+        }
         stage('Run Python Script on Remote Server') {
             steps {
                 script {
@@ -52,10 +66,5 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            // This block is executed when the pipeline succeeds, regardless of the background process.
-            echo "Pipeline completed successfully."
-        }
-    }
+
 }
