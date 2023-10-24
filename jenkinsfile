@@ -10,9 +10,13 @@ pipeline {
         stage('Append Route') {
             steps {
                 script {
-                    // Execute the shell script to append the route
-                    sh 'chmod +x append.sh'
-                    sh './append.sh'
+                    if ( DEPLOY_ENV == 'development' ){
+                        sh 'chmod +x append.sh'
+                        sh './append.sh'
+                    } 
+                    else {
+                        sh 'echo "not run append script because the env is not dev"'
+                    }     
                 }
             }
         }
