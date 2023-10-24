@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    parameters {
+        choice(name: 'DEPLOY_ENV', choices: 'production\nstaging\ndevelopment', description: 'Select the deployment environment')
+    }
 
     stages {
 
@@ -38,9 +42,6 @@ pipeline {
         }
         stage('Run Python Script on Remote Server') {
             steps {
-                parameters {
-                    choice(name: 'DEPLOY_ENV', choices: 'production\nstaging\ndevelopment', description: 'Select the deployment environment')
-                }
                 script {
                     // Define the SSH credentials ID
                     def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
