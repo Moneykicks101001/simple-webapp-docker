@@ -12,7 +12,6 @@ pipeline {
                 script {
                     // Execute the shell script to append the route
                     sh 'chmod +x append.sh'
-                    sh 'echo "The environment is ${params.DEPLOY_ENV}"'
                     sh './append.sh'
                 }
             }
