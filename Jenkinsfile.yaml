@@ -1,34 +1,36 @@
 ---
 pipeline:
   agent:
-    label: 'any'
+    any:
+    
   stages:
     - stage: 'Append Route'
       steps:
         - script:
-            - sh 'chmod +x append.sh'
-            - sh './append.sh'
+          - sh 'chmod +x append.sh'
+          - sh './append.sh'
 
     - stage: 'Show app.py file'
       steps:
         - script:
-            - sh 'cat app.py'
+          - sh 'cat app.py'
 
     - stage: 'Copy Code to Remote Server'
       steps:
         - script:
-            - script:
-              - def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
-              - def remoteServer = 'root@python'
-              - def remotePath = '/home'
-              - sshagent(credentials: [sshCredentialsId]) {
-                - sh "scp -r ./app.py $remoteServer:$remotePath"
-
+          - def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
+          - def remoteServer = 'root@python'
+          - def remotePath = '/home'
+          - sshagent(credentials: [sshCredentialsId]) 
+          - sh "scp -r ./app.py $remoteServer:$remotePath"
+            
+            
     - stage: 'Run Python Script on Remote Server'
       steps:
         - script:
-            - def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
-            - def remoteServer = 'root@python'
-            - def remotePath = '/home'
-            - sshagent(credentials: [sshCredentialsId]) {
-              - sh "ssh -f $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
+          - def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
+          - def remoteServer = 'root@python'
+          - def remotePath = '/home'
+          - sshagent(credentials: [sshCredentialsId]) 
+          - sh "ssh -f $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
+            
