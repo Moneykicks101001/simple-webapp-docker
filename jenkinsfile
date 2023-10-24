@@ -37,20 +37,33 @@ pipeline {
             }
         }
         stage('Run Python Script on Remote Server') {
+            parameters {
+                choice(name: 'DEPLOY_ENV', choices: 'production\nstaging\ndevelopment', description: 'Select the deployment environment')
+            }
             steps {
                 script {
-                    // Define the SSH credentials ID and remote server details
+                    // Define the SSH credentials ID
                     def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
-                    def remoteServer = 'root@python'
+                    
+                    // Define the remote server details for each environment
+                    def remoteServers = [
+                        production: 'root@python',
+                        staging: 'root@python',
+                        development: 'root@python'
+                    ]
+                    
+                    def deployEnv = params.DEPLOY_ENV
+                    def remoteServer = remoteServers[deployEnv]
                     def remotePath = '/home'
-
-                    // Use SSH agent to run the Python script on the remote server
+                    
+                    // Use SSH agent to run the Python script on the selected remote server
                     sshagent(credentials: [sshCredentialsId]) {
                         sh "ssh -f $remoteServer 'cd $remotePath && nohup python app.py > /dev/null 2>&1 &'"
                     }
                 }
             }
         }
+
     }
 
 }
