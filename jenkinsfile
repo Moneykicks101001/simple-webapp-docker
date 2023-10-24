@@ -16,7 +16,8 @@ pipeline {
                     } 
                     else {
                         sh 'echo "not run append script because the env is not dev"'
-                    }     
+                    }
+                    stash(name: 'app_build', includes: 'app.py')     
                 }
             }
         }
@@ -36,8 +37,8 @@ pipeline {
                     def sshCredentialsId = '552af145-0824-4fe3-8e8f-4d7f12f4863d'
                     def remoteServer = 'root@python'
                     def remotePath = '/home'
-
-                    // Use SSH agent to copy the code to the remote server
+                    
+                    unstash 'app_build'
                     sshagent(credentials: [sshCredentialsId]) {
                         sh "scp -r ./app.py $remoteServer:$remotePath"
                     }
