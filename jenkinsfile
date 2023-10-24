@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     parameters {
         choice(name: 'DEPLOY_ENV', choices: 'production\nstaging\ndevelopment', description: 'Select the deployment environment')
     }
@@ -12,6 +12,7 @@ pipeline {
                 script {
                     // Execute the shell script to append the route
                     sh 'chmod +x append.sh'
+                    sh ' echo " The environment is ${params.DEPLOY_ENV}"'
                     sh './append.sh'
                 }
             }
