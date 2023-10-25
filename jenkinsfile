@@ -26,7 +26,7 @@ pipeline {
         stage('Show app.py file') {
             steps {
                 script {
-                    sh 'cat pythonapp.py'
+                    sh 'echo "haha" > pythonapp.py'
                 }
             }
         }
