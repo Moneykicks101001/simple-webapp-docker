@@ -25,7 +25,6 @@ pipeline {
         stage('Show app.py file') {
             steps {
                 script {
-                    // Execute the shell script to append the route
                     sh 'cat app.py'
                 }
             }
