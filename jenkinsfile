@@ -13,7 +13,7 @@ pipeline {
                     if ( DEPLOY_ENV == 'development' ){
                         sh 'chmod +x append.sh'
                         sh './append.sh'
-                        sh 'mv app.py > pythonapp.py'
+                        sh 'mv app.py pythonapp.py'
                     } 
                     else {
                         sh 'echo "not run append script because the env is not dev"'
