@@ -23,13 +23,13 @@ pipeline {
             }
         }
 
-        // stage('Show app.py file') {
-        //     steps {
-        //         script {
-        //             sh 'cat app.py'
-        //         }
-        //     }
-        // }
+        stage('Show app.py file') {
+            steps {
+                script {
+                    sh 'cat pythonapp.py'
+                }
+            }
+        }
         stage('Copy Code to Remote Server') {
             steps {
                 script {
