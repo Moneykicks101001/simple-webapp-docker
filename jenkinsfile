@@ -13,22 +13,23 @@ pipeline {
                     if ( DEPLOY_ENV == 'development' ){
                         sh 'chmod +x append.sh'
                         sh './append.sh'
+                        sh 'mv app.py > pythonapp.py'
                     } 
                     else {
                         sh 'echo "not run append script because the env is not dev"'
                     }
-                    stash(name: 'app_build', includes: 'app.py')     
+                    stash(name: 'app_build', includes: 'pythonapp.py')     
                 }
             }
         }
 
-        stage('Show app.py file') {
-            steps {
-                script {
-                    sh 'cat app.py'
-                }
-            }
-        }
+        // stage('Show app.py file') {
+        //     steps {
+        //         script {
+        //             sh 'cat app.py'
+        //         }
+        //     }
+        // }
         stage('Copy Code to Remote Server') {
             steps {
                 script {
@@ -39,7 +40,7 @@ pipeline {
                     
                     unstash 'app_build'
                     sshagent(credentials: [sshCredentialsId]) {
-                        sh "scp -r ./app.py $remoteServer:$remotePath"
+                        sh "scp -r ./pythonapp.py $remoteServer:$remotePath"
                     }
                 }
             }
